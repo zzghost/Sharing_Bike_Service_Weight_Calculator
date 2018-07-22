@@ -15,7 +15,7 @@ public class locationInfo {
     public double people;
     public double weight;
 
-    public static final String API_KEY = "AIzaSyCxnwlyCPl9j3Birh2C8bsJudwJWWFG8RA";
+    public static final String API_KEY = "";
     public static final PlaceType[] PLACE_TYPES = {PlaceType.BANK, PlaceType.SUBWAY_STATION, PlaceType.PARK, PlaceType.HOSPITAL, PlaceType.STORE};
     public static final int[] WEIGHTS = {5, 10, 7, 7, 8};
 
