@@ -1,0 +1,77 @@
+<html><!DOCTYPE html>
+<head>
+    <title>Place Searches</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    test{
+    height: 0%
+    ;}
+    </style>
+    <script src="values.js"> </script>
+    <script>
+      
+      function initMap() {
+        // Create the map.
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: zoom_size,
+            center: new google.maps.LatLng(center[1], center[0]),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+          
+        var marker, i;
+        for (i = 0; i < locations1.length; i++) {
+            marker = new google.maps.Marker({
+                position: new google.maps.LatLng(locations1[i][1], locations1[i][0]),
+                map: map
+            });
+        }
+
+        // circle
+        // Construct the circle for each value in citymap.
+        // Note: We scale the area of the circle based on the population.
+        
+        for (var point in circlemap1) {
+          // Add the circle for this city to the map.
+          var cityCircle = new google.maps.Circle({
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#FF0000',
+            fillOpacity: 0.35,
+            map: map,
+            center: circlemap1[point].center,
+            //radius: circlemap1[point].population * 0.5
+            radius: Math.sqrt(circlemap1[point].population) * 5
+          });
+        }
+
+}
+
+
+
+    </script>
+</head>
+<body>
+    <div id="panel">
+    <input type="submit" value="page up" onclick="javascrtpt:window.location.href='http://htmlpreview.github.io/?https://github.com/Ashlee1994/sharing_bike/blob/master/googleMap.html'">
+    <b>    </b>
+	<b>   time slot: 06:00 - 12:00</b>
+    
+	<input type="submit" value="page down" onclick="javascrtpt:window.location.href='showNextIntervalPoints_3.html'">
+    </div>
+    <div id="map"></div>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCxnwlyCPl9j3Birh2C8bsJudwJWWFG8RA&libraries=places&callback=initMap" async defer></script>
+</body>
+</html>

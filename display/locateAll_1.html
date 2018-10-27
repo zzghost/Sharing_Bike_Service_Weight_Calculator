@@ -1,0 +1,65 @@
+<html><!DOCTYPE html>
+<head>
+    <title>Place Searches</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    test{
+    height: 0%
+    ;}
+    </style>
+    <script src="values.js"> </script>
+    <script>
+        // lng  lat popularity
+        
+
+      function initMap() {
+        // Create the map.
+          /*
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 4,
+          center: {lat: 40.75686, lng: -73.98516},
+          mapTypeId: 'terrain'
+        });*/
+          
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: zoom_size,
+            center: new google.maps.LatLng(center[1], center[0]),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+          
+        var marker, i;
+        for (i = 0; i < locations1.length; i++) {
+            marker = new google.maps.Marker({
+                position: new google.maps.LatLng(locations1[i][1], locations1[i][0]),
+                map: map
+            });
+        }
+}
+
+    </script>
+</head>
+    
+<body>
+    <div id="panel">
+    <input type="submit" value="page up" >
+    <b>    </b>
+	<b>   time slot: 06:00 - 12:00</b>
+    
+	<input type="submit" value="page down" onclick="javascrtpt:window.location.href='http://htmlpreview.github.io/?https://github.com/Ashlee1994/sharing_bike/blob/master/googleMap.html'">
+    </div>
+    <div id="map"></div>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCxnwlyCPl9j3Birh2C8bsJudwJWWFG8RA&libraries=places&callback=initMap" async defer></script>
+</body>
+</html>

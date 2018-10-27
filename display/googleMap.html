@@ -1,0 +1,242 @@
+<html><!DOCTYPE html>
+<head>
+    <title>Place Searches</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    test{
+    height: 0%
+    ;}
+    </style>
+    <script>
+      
+      function initMap() {
+          
+                  
+        var popular1 = [
+            [-73.98975163613596, 40.75652717344222, 805.0799999999999],
+            [-73.96769882363252, 40.76331576179056, 735.2]
+        ];
+        
+        var circlemap1 = {
+            point1: {
+              center: {lat: popular1[0][1], lng: popular1[0][0]},
+              population: popular1[0][2]
+                // 2714856
+            },
+
+            point2: {
+              center: {lat: popular1[1][1], lng: popular1[1][0]},
+              population: popular1[1][2]
+            },
+
+        };
+        
+        var zoom_size = 13;
+          // longitude latitude
+          var center = [-73.954324, 40.757554];
+          
+        var infowindow = new google.maps.InfoWindow({});
+        // Create the map.
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 15,
+            center: new google.maps.LatLng(40.762760, -73.980028),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+          
+
+        var marker, i;
+        for (i = 0; i < popular1.length; i++) {
+            marker = new google.maps.Marker({
+                position: new google.maps.LatLng(popular1[i][1], popular1[i][0]),
+                map: map
+            });
+        }
+
+        // circle
+        // Construct the circle for each value in citymap.
+        // Note: We scale the area of the circle based on the population.
+        
+        for (var point in circlemap1) {
+          // Add the circle for this city to the map.
+          var cityCircle = new google.maps.Circle({
+            strokeColor: '#00FF00',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#00FF00',
+            fillOpacity: 0.35,
+            map: map,
+            center: circlemap1[point].center,
+            //radius: circlemap1[point].population * 0.5
+            radius: 500
+          });
+        }
+          
+        for (i = 0; i < popular1.length; i++) {
+            marker = new google.maps.Marker({
+                position: new google.maps.LatLng(popular1[i][1], popular1[i][0]),
+                // fillColor: '#00FF00',
+                icon: 'http://maps.google.com/mapfiles/ms/icons/green.png',
+                map: map
+            });
+        }
+          
+        service = new google.maps.places.PlacesService(map);
+          
+        // 
+        for(i = 0; i < popular1.length; i++){
+            service.nearbySearch({
+              location: {lat: popular1[i][1], lng: popular1[i][0]},
+              radius: 500,
+              type: ['store']
+            }, function (results, status) {
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
+              for (var k = 0; k < results.length; k++) {
+                //createMarker(results[i]);
+                var placeLoc = results[k].geometry.location;
+                var marker = new google.maps.Marker({
+                map: map,
+                position: results[k].geometry.location,
+                icon: 'http://maps.google.com/mapfiles/ms/icons/orange.png'
+                });
+                google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                    return function () {
+                        infowindow.setContent('store');
+                        infowindow.open(map, marker);
+                    }
+                })(marker, k));
+              }
+            }
+          });
+        }
+        for(i = 0; i < popular1.length; i++){
+            service.nearbySearch({
+              location: {lat: popular1[i][1], lng: popular1[i][0]},
+              radius: 500,
+              type: ['subway']
+            }, function (results, status) {
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
+              for (var k = 0; k < results.length ; k++) {
+                var placeLoc = results[k].geometry.location;
+                var marker = new google.maps.Marker({
+                map: map,
+                position: results[k].geometry.location,
+                icon: 'http://maps.google.com/mapfiles/ms/icons/blue.png',
+                });
+                google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                    return function () {
+                        infowindow.setContent('subway');
+                        infowindow.open(map, marker);
+                    }
+                })(marker, k));
+              }
+            }
+          });
+        }
+        
+        for(i = 0; i < popular1.length; i++){
+            service.nearbySearch({
+              location: {lat: popular1[i][1], lng: popular1[i][0]},
+              radius: 500,
+              type: ['bank']
+            }, function (results, status) {
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
+              for (var k = 0; k < results.length; k++) {
+                //createMarker(results[i]);
+                var placeLoc = results[k].geometry.location;
+                var marker = new google.maps.Marker({
+                map: map,
+                position: results[k].geometry.location,
+                icon: 'http://maps.google.com/mapfiles/ms/icons/yellow.png',
+                });
+                google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                    return function () {
+                        infowindow.setContent('bank');
+                        infowindow.open(map, marker);
+                    }
+                })(marker, k));
+              }
+            }
+          });
+        }
+          
+          for(i = 0; i < popular1.length; i++){
+            service.nearbySearch({
+              location: {lat: popular1[i][1], lng: popular1[i][0]},
+              radius: 500,
+              types: ['hospital']
+            }, function (results, status) {
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
+              for (var k = 0; k < results.length; k++) {
+                //createMarker(results[i]);
+                var placeLoc = results[k].geometry.location;
+                var marker = new google.maps.Marker({
+                map: map,
+                position: results[k].geometry.location,
+                icon: 'http://maps.google.com/mapfiles/ms/icons/pink.png',
+                });
+               google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                    return function () {
+                        infowindow.setContent('hospital');
+                        infowindow.open(map, marker);
+                    }
+                })(marker, k));
+              }
+            }
+          });
+        }
+          
+          for(i = 0; i < popular1.length; i++){
+            service.nearbySearch({
+              location: {lat: popular1[i][1], lng: popular1[i][0]},
+              radius: 500,
+              type: ['park']
+            }, function (results, status) {
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
+              for (var k = 0; k < results.length; k++) {
+                //createMarker(results[i]);
+                var placeLoc = results[k].geometry.location;
+                var marker = new google.maps.Marker({
+                map: map,
+                position: results[k].geometry.location,
+                icon: 'http://maps.google.com/mapfiles/ms/icons/purple.png',
+                });
+                google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                    return function () {
+                        infowindow.setContent('park');
+                        infowindow.open(map, marker);
+                    }
+                })(marker, k));
+              }
+            }
+          });
+        }
+                             
+}
+
+    </script>
+</head>
+<body>
+    <div id="panel">
+    <input type="submit" value="page up" onclick="javascrtpt:window.location.href='http://htmlpreview.github.io/?https://github.com/Ashlee1994/sharing_bike/blob/master/locateAll_1.html'">
+    <b>    </b>
+	<b>   time slot: 06:00 - 12:00</b>
+    
+	<input type="submit" value="page down" onclick="javascrtpt:window.location.href='http://htmlpreview.github.io/?https://raw.githubusercontent.com/Ashlee1994/sharing_bike/master/circleSomePoint_2.html'">
+  
+    </div>
+    <div id="map"></div>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCxnwlyCPl9j3Birh2C8bsJudwJWWFG8RA&libraries=places&callback=initMap" async defer></script>
+</body>
+</html>
